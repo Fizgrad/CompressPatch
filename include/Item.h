@@ -7,13 +7,30 @@
 
 
 #include <tuple>
+#include <VariableLengthEncoder.h>
 
-using Item = std::tuple<PatchMapKind, int, int>;
-using InvariantItem = std::tuple<PatchMapKind, int>;
+using Item = std::tuple<PatchMapKind, int32_t, int32_t>;
+using InvariantItem = std::tuple<PatchMapKind, int32_t>;
+
+using VariableLengthEncodingItem = std::tuple<
+  PatchMapKind, VariableLengthEncoding, VariableLengthEncoding>;
+using VariableLengthEncodingInvariantItem = std::tuple<PatchMapKind, VariableLengthEncoding>;
 
 inline std::ostream& operator<<(std::ostream& os, const Item& item) {
   os << PatchMapKindToString(std::get<0>(item)) << " " << std::get<1>(item) << ":"
       << std::get<2>(item);
+  return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const VariableLengthEncodingItem& item) {
+  os << PatchMapKindToString(std::get<0>(item)) << " " << std::get<1>(item) << ":"
+      << std::get<2>(item);
+  return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const VariableLengthEncodingInvariantItem& item) {
+  os << PatchMapKindToString(std::get<0>(item)) << " " << std::get<1>(item) << ":" <<
+      std::get<1>(item);
   return os;
 }
 

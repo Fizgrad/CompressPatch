@@ -5,6 +5,7 @@
 #include <fstream>
 #include "PatchCompressor.h"
 #include <string>
+#include "VariableLengthEncoder.h"
 #include <utility> // for std::pair
 
 
@@ -23,12 +24,14 @@ int main() {
     auto item = stringToItem(line);
     compressor.addItem(item);
   }
+  // compressor.output(std::cout);
+
   compressor.compress();
 
-  compressor.output(std::cout);
-  std::cout << compressor.size() << std::endl;
+  // compressor.output(std::cout);
+  std::cout << 4 * 2 * compressor.size() << std::endl;
   std::cout << compressor.invariantCount() << std::endl;
-  std::cout << compressor.invariantItems.size() << std::endl;
-  std::cout << compressor.invariantItems.size()  + compressor.plainItems.size()<< std::endl;
+  std::cout << 4 * compressor.invariantItems.size() + 8 * compressor.plainItems.size() << std::endl;
+  std::cout << compressor.getVariableLengthEncodedSize() << std::endl;
   return 0;
 }
